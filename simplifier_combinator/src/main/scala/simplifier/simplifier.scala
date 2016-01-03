@@ -12,14 +12,16 @@ object Simplifier {
     // na samym poczatku musza byc patterny najbardziej szczegolowe, zeby te bardziej ogolne ich
     // nie "zjadly" :)
 
-    // konkatenacja tupli i list na samym poczatku (albowiem j.w.):
-    case BinExpr("+", Tuple(l1), Tuple(l2)) => Tuple((l1 ++ l2) map simplify)
-    case BinExpr("+", ElemList(l1), ElemList(l2)) => ElemList((l1 ++ l2) map simplify)
-
     // usuwanie duplikatow ze slownikow:
     case KeyDatumList(list) => KeyDatumList(list.foldLeft(Map.empty[Node, KeyDatum])(
       (_map, kd) => _map + (kd.key -> kd)
     ).toList.map(p => p._2))
+
+    // konkatenacja tupli i list na samym poczatku (albowiem j.w.):
+    case BinExpr("+", Tuple(l1), Tuple(l2)) => Tuple((l1 ++ l2) map simplify)
+    case BinExpr("+", ElemList(l1), ElemList(l2)) => ElemList((l1 ++ l2) map simplify)
+
+
 
     // usuwanie petli z falszywym warunkiem:
     case WhileInstr(cond, body) =>
