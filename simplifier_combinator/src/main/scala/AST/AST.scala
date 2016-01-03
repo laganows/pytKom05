@@ -1,15 +1,15 @@
 package AST
 
 object Priority {
-    val binary = Map("lambda"->1,
-                     "or"->2,
-                     "and"->3,
-                     "is"->8, "<"->8, ">"->8, ">="->8, "<="->8, "=="->8, "!="->8,
-                     "+"->9,  "-"->9,
-                     "*"->10, "/"->10, "%"->10)
+    val binary = Map("lambda" -> 1,
+                     "or" -> 2,
+                     "and" -> 3,
+                     "is" -> 8, "<" -> 8, ">" -> 8, ">=" -> 8, "<=" -> 8, "==" -> 8, "!=" -> 8,
+                     "+" -> 9,  "-" -> 9,
+                     "*" -> 10, "/" -> 10, "%" -> 10,
+                     "**" -> 12)
 
-    val unary = Map("not"->4,
-                    "+"->12,  "-"->12)
+    val unary = Map("not" -> 4, "+" -> 12,  "-" -> 12)
 }
 
 // sealed trait Node would be also OK
@@ -18,6 +18,8 @@ sealed abstract class Node {
     val indent = " " * 4
 }
 
+
+// w prostych case classach nie trzeba przeciazac metody equals
 case class IntNum(value: Integer) extends Node {
     override def toStr = value.toString
 }
@@ -42,6 +44,7 @@ case class Variable(name: String) extends Node {
     override def toStr = name
 }
 
+// ale w bardziej zlozonych juz tak
 case class Unary(op: String, expr: Node) extends Node {
 
     override def toStr = {
@@ -52,6 +55,12 @@ case class Unary(op: String, expr: Node) extends Node {
             case _ => 
         }
         op + " " + str
+    }
+
+    override def equals(that: Any): Boolean = that match {
+        case Unary(thatOp, thatExpr) if thatOp == op && thatExpr == expr
+            => true
+        case _ => false
     }
 
 }
@@ -72,6 +81,16 @@ case class BinExpr(op: String, left: Node, right: Node) extends Node {
             case _ => 
         }
         leftStr + " " + op + " " + rightStr
+    }
+
+    // magia pattern matchy
+    override def equals(that: Any) = that match {
+        case BinExpr("+", l, r)   if l == right && r == left  && op == "+"   => true
+        case BinExpr("*", l, r)   if l == right && r == left  && op == "*"   => true
+        case BinExpr("and", l, r) if l == right && r == left  && op == "and" => true
+        case BinExpr("or", l, r)  if l == right && r == left  && op == "or"  => true
+        case BinExpr(o, l, r)     if l == left  && r == right && o  == op    => true
+        case _                                                               => false
     }
 }
 
@@ -190,5 +209,6 @@ case class Tuple(list: List[Node]) extends Node {
                          else list.map(_.toStr).mkString("(", ",", ")")
 }
 
-
-        
+case class EmptyInstr() extends Node {
+    override def toStr = ""
+}
