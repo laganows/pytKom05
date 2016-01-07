@@ -27,7 +27,7 @@ class parserSpec extends Specification {
 
     "recognize elif branches in if-else stmts" in {
       val if_stmt_str = """if x>1:
-                   { 
+                   {
                       y = -1
                    }
                    elif x>0:
@@ -38,7 +38,7 @@ class parserSpec extends Specification {
                    {
                       y = -1
                    }
-                   else: 
+                   else:
                    {
                       y = 1
                    } """
@@ -112,7 +112,7 @@ class parserSpec extends Specification {
       parseString("x and True") mustEqual parseString("x")
       parseString("x==x") mustEqual parseString("True")
       parseString("x>=x") mustEqual parseString("True")
-      parseString("x<=x") mustEqual parseString("True")  
+      parseString("x<=x") mustEqual parseString("True")
       parseString("x!=x") mustEqual parseString("False")
       parseString("x>x") mustEqual parseString("False")
       parseString("x<x") mustEqual parseString("False")
@@ -155,7 +155,7 @@ class parserSpec extends Specification {
       parseString("[]+[a,b,c]") mustEqual parseString("[a,b,c]")
       parseString("[a,b,c]+[x,y]") mustEqual parseString("[a,b,c,x,y]")
     }
-    
+
     "remove no effect instructions" in {
       parseString("x=x") mustEqual parseString("")
     }
@@ -166,14 +166,14 @@ class parserSpec extends Specification {
 
     "simplify if-else instruction with known condition" in {
       val if_stmt_str = """if %s:
-                   { 
+                   {
                       x = 1
                    }
-                   else: 
+                   else:
                    {
                       x = 0
                    } """
-                   
+
       parseString(if_stmt_str.format("True")) mustEqual parseString("x=1")
       parseString(if_stmt_str.format("False")) mustEqual parseString("x=0")
     }
@@ -182,14 +182,14 @@ class parserSpec extends Specification {
       val if_expr_str = "x = y if %s else z"
       parseString(if_expr_str.format("True")) mustEqual parseString("x=y")
       parseString(if_expr_str.format("False")) mustEqual parseString("x=z")
-    }   
+    }
 
     "remove while loop with False condition" in {
       val str = """while False:
-                   { 
+                   {
                       x = x + 1
                    } """
-                   
+
       parseString(str) mustEqual parseString("")
     }
 
