@@ -1,31 +1,29 @@
 package simplifier
 import AST._
-import math.pow
-
 
 object SimplifyIfElseInstr {
-  def apply(expr: IfElseInstr): Node = {
-    (expr.cond, expr.left, expr.right) match {
-      case (cond, left, right) =>
-        val sCond = Simplifier(cond)
-        sCond match {
-          case TrueConst()  => Simplifier(left)
+  def apply(ifStatement: IfElseInstr): Node = {
+    (ifStatement.cond, ifStatement.left, ifStatement.right) match {
+      case (condition, left, right) =>
+        val simplifiedCondition = Simplifier(condition)
+        simplifiedCondition match {
           case FalseConst() => Simplifier(right)
-          case _            => IfElseInstr(sCond, Simplifier(left), Simplifier(right))
+          case TrueConst() => Simplifier(left)
+          case (_) => IfElseInstr(simplifiedCondition, Simplifier(left), Simplifier(right))
         }
     }
   }
 }
 
 object SimplifyIfInstr {
-  def apply(expr: IfInstr): Node = {
-    (expr.cond, expr.left) match {
-      case (cond, left) =>
-        val sCond = Simplifier(cond)
-        sCond match {
-          case TrueConst()  => Simplifier(left)
+  def apply(ifStatement: IfInstr): Node = {
+    (ifStatement.cond, ifStatement.left) match {
+      case (condition, left) =>
+        val simplifiedCondition = Simplifier(condition)
+        simplifiedCondition match {
+          case TrueConst() => Simplifier(left)
           case FalseConst() => EmptyInstr()
-          case _            => IfInstr(sCond, Simplifier(left))
+          case (_) => IfInstr(simplifiedCondition, Simplifier(left))
         }
     }
   }
@@ -33,14 +31,14 @@ object SimplifyIfInstr {
 
 
 object SimplifyIfElseExpr {
-  def apply(expr: IfElseExpr): Node = {
-    (expr.cond, expr.left, expr.right) match {
-      case (cond, left, right) =>
-        val sCond = Simplifier(cond)
-        sCond match {
+  def apply(ifStatement: IfElseExpr): Node = {
+    (ifStatement.cond, ifStatement.left, ifStatement.right) match {
+      case (condition, left, right) =>
+        val simplifiedCondition = Simplifier(condition)
+        simplifiedCondition match {
           case TrueConst()  => Simplifier(left)
           case FalseConst() => Simplifier(right)
-          case _            => IfElseExpr(sCond, Simplifier(left), Simplifier(right))
+          case _ => IfElseExpr(simplifiedCondition, Simplifier(left), Simplifier(right))
         }
     }
   }

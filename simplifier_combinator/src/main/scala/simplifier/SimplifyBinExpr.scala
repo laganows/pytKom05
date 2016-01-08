@@ -4,101 +4,101 @@ import math.pow
 
 
 object SimplifyBinExpr {
-  def apply(expr: BinExpr): Node = {
-    (expr.op, expr.left, expr.right) match {
+  def apply(binExpression: BinExpr): Node = {
+    (binExpression.op, binExpression.left, binExpression.right) match {
       case ("+", Tuple(l1), Tuple(l2)) => Tuple((l1 ++ l2) map Simplifier.simplify)
       case ("+", ElemList(l1), ElemList(l2)) => ElemList((l1 ++ l2) map Simplifier.simplify)
-      case (op, IntNum(x), IntNum(y)) =>
+      case (op, IntNum(r1), IntNum(r2)) =>
         op match {
-          case "+" => IntNum(x + y)
-          case "-" => IntNum(x - y)
-          case "*" => IntNum(x * y)
-          case "/" => IntNum(x / y)
-          case "%" => IntNum(x % y)
-          case "**" => IntNum(pow(x.toDouble, y.toDouble).toInt)
+          case "-" => IntNum(r1 - r2)
+          case "+" => IntNum(r1 + r2)
+          case "/" => IntNum(r1 / r2)
+          case "*" => IntNum(r1 * r2)
+          case "%" => IntNum(r1 % r2)
+          case "**" => IntNum(pow(r1.toDouble, r2.toDouble).toInt)
 
-          case "==" => if (x == y) TrueConst() else FalseConst()
-          case "!=" => if (x != y) TrueConst() else FalseConst()
-          case ">=" => if (x >= y) TrueConst() else FalseConst()
-          case "<=" => if (x <= y) TrueConst() else FalseConst()
-          case ">" => if (x > y)   TrueConst() else FalseConst()
-          case "<" => if (x < y)   TrueConst() else FalseConst()
+          case "==" => if (r1 == r2) TrueConst() else FalseConst()
+          case "!=" => if (r1 != r2) TrueConst() else FalseConst()
+          case ">=" => if (r1 >= r2) TrueConst() else FalseConst()
+          case "<=" => if (r1 <= r2) TrueConst() else FalseConst()
+          case ">" => if (r1 > r2)   TrueConst() else FalseConst()
+          case "<" => if (r1 < r2)   TrueConst() else FalseConst()
         }
 
-      case (op, FloatNum(x), FloatNum(y)) =>
+      case (op, FloatNum(r1), FloatNum(r2)) =>
         op match {
-          case "+"  => FloatNum(x + y)
-          case "-"  => FloatNum(x - y)
-          case "*"  => FloatNum(x * y)
-          case "/"  => FloatNum(x / y)
-          case "%"  => FloatNum(x % y)
-          case "**" => FloatNum(pow(x, y))
+          case "-" => FloatNum(r1 - r2)
+          case "+" => FloatNum(r1 + r2)
+          case "/" => FloatNum(r1 / r2)
+          case "*" => FloatNum(r1 * r2)
+          case "%" => FloatNum(r1 % r2)
+          case "**" => FloatNum(pow(r1, r2))
 
-          case "==" => if (x == y) TrueConst() else FalseConst()
-          case "!=" => if (x != y) TrueConst() else FalseConst()
-          case ">=" => if (x >= y) TrueConst() else FalseConst()
-          case "<=" => if (x <= y) TrueConst() else FalseConst()
-          case ">"  => if (x > y)  TrueConst() else FalseConst()
-          case "<"  => if (x < y)  TrueConst() else FalseConst()
+          case "==" => if (r1 == r2) TrueConst() else FalseConst()
+          case "!=" => if (r1 != r2) TrueConst() else FalseConst()
+          case ">=" => if (r1 >= r2) TrueConst() else FalseConst()
+          case "<=" => if (r1 <= r2) TrueConst() else FalseConst()
+          case ">" => if (r1 > r2)  TrueConst() else FalseConst()
+          case "<" => if (r1 < r2)  TrueConst() else FalseConst()
         }
 
-      case (op, IntNum(x), FloatNum(y)) =>
+      case (op, IntNum(r1), FloatNum(r2)) =>
         op match {
-          case "+"  => FloatNum(x + y)
-          case "-"  => FloatNum(x - y)
-          case "*"  => FloatNum(x * y)
-          case "/"  => FloatNum(x / y)
-          case "%"  => FloatNum(x % y)
-          case "**" => FloatNum(pow(x.toDouble, y))
+          case "+" => FloatNum(r1 + r2)
+          case "-" => FloatNum(r1 - r2)
+          case "*" => FloatNum(r1 * r2)
+          case "/" => FloatNum(r1 / r2)
+          case "%" => FloatNum(r1 % r2)
+          case "**" => FloatNum(pow(r1.toDouble, r2))
 
-          case "==" => if (x == y) TrueConst() else FalseConst()
-          case "!=" => if (x != y) TrueConst() else FalseConst()
-          case ">=" => if (x >= y) TrueConst() else FalseConst()
-          case "<=" => if (x <= y) TrueConst() else FalseConst()
-          case ">"  => if (x > y)  TrueConst() else FalseConst()
-          case "<"  => if (x < y)  TrueConst() else FalseConst()
+          case "==" => if (r1 == r2) TrueConst() else FalseConst()
+          case "!=" => if (r1 != r2) TrueConst() else FalseConst()
+          case ">=" => if (r1 >= r2) TrueConst() else FalseConst()
+          case "<=" => if (r1 <= r2) TrueConst() else FalseConst()
+          case ">" => if (r1 > r2)  TrueConst() else FalseConst()
+          case "<" => if (r1 < r2)  TrueConst() else FalseConst()
         }
 
-      case (op, FloatNum(x), IntNum(y)) =>
+      case (op, FloatNum(r1), IntNum(r2)) =>
         op match {
-          case "+"  => FloatNum(x + y)
-          case "-"  => FloatNum(x - y)
-          case "*"  => FloatNum(x * y)
-          case "/"  => FloatNum(x / y)
-          case "%"  => FloatNum(x % y)
-          case "**" => FloatNum(pow(x, y.toDouble))
+          case "+" => FloatNum(r1 + r2)
+          case "-" => FloatNum(r1 - r2)
+          case "*" => FloatNum(r1 * r2)
+          case "/" => FloatNum(r1 / r2)
+          case "%" => FloatNum(r1 % r2)
+          case "**" => FloatNum(pow(r1, r2.toDouble))
 
-          case "==" => if (x == y) TrueConst() else FalseConst()
-          case "!=" => if (x != y) TrueConst() else FalseConst()
-          case ">=" => if (x >= y) TrueConst() else FalseConst()
-          case "<=" => if (x <= y) TrueConst() else FalseConst()
-          case ">"  => if (x > y)  TrueConst() else FalseConst()
-          case "<"  => if (x < y)  TrueConst() else FalseConst()
+          case "==" => if (r1 == r2) TrueConst() else FalseConst()
+          case "!=" => if (r1 != r2) TrueConst() else FalseConst()
+          case ">=" => if (r1 >= r2) TrueConst() else FalseConst()
+          case "<=" => if (r1 <= r2) TrueConst() else FalseConst()
+          case ">"  => if (r1 > r2)  TrueConst() else FalseConst()
+          case "<"  => if (r1 < r2)  TrueConst() else FalseConst()
         }
 
-      case ("==", x, y) if x == y => TrueConst()
-      case (">=", x,y)  if x == y => TrueConst()
-      case ("<=", x,y)  if x == y => TrueConst()
-      case ("!=", x,y)  if x == y => FalseConst()
-      case ("<", x,y)   if x == y => FalseConst()
-      case (">", x,y)   if x == y => FalseConst()
-      case ("or", x ,y) if x == y => x
-      case ("and", x,y) if x == y => x
+      case ("==", r1, r2) if r1 == r2 => TrueConst()
+      case (">=", r1, r2) if r1 == r2 => TrueConst()
+      case ("<=", r1, r2) if r1 == r2 => TrueConst()
+      case ("!=", r1, r2) if r1 == r2 => FalseConst()
+      case ("<", r1, r2) if r1 == r2 => FalseConst()
+      case (">", r1, r2) if r1 == r2 => FalseConst()
+      case ("or", r1, r2) if r1 == r2 => r1
+      case ("and", r1, r2) if r1 == r2 => r1
 
       case ("+", BinExpr("+", BinExpr("+", BinExpr("*", x1, y1), BinExpr("*", x2, y2)), BinExpr("*", x3, y3)), BinExpr("*", x4, y4))
         => Simplifier(BinExpr("+", BinExpr("+", BinExpr("*", x1, y1), BinExpr("*", x2, y2)), BinExpr("+", BinExpr("*", x3, y3), BinExpr("*", x4, y4))))
 
 
       case ("-", left, right)    => (Simplifier(left), Simplifier(right)) match {
-        case (exprL, exprR) if exprL == exprR => IntNum(0)
-        case (expr, IntNum(n)) if n == 0  => expr
-        case (IntNum(n), expr) if n == 0  => Simplifier(Unary("-", expr))
-        case (expr, FloatNum(n)) if n == 0 => expr
-        case (FloatNum(n), expr) if n == 0 => Simplifier(Unary("-", expr))
+        case (binExpressionLeft, binExpressionRight) if binExpressionLeft == binExpressionRight => IntNum(0)
+        case (binExpression, IntNum(n)) if n == 0  => binExpression
+        case (IntNum(n), binExpression) if n == 0  => Simplifier(Unary("-", binExpression))
+        case (binExpression, FloatNum(n)) if n == 0 => binExpression
+        case (FloatNum(n), binExpression) if n == 0 => Simplifier(Unary("-", binExpression))
 
         // distributive properties of "*":
-        case (BinExpr("*", l, r), expr) if expr == l => Simplifier(BinExpr("*", BinExpr("-", r, IntNum(1)), l))
-        case (BinExpr("*", l, r), expr) if expr == r => Simplifier(BinExpr("*", BinExpr("-", l, IntNum(1)), r))
+        case (BinExpr("*", l, r), binExpression) if binExpression == l => Simplifier(BinExpr("*", BinExpr("-", r, IntNum(1)), l))
+        case (BinExpr("*", l, r), binExpression) if binExpression == r => Simplifier(BinExpr("*", BinExpr("-", l, IntNum(1)), r))
 
         case (e1@BinExpr("*", l1, r1), e2@BinExpr("*", l2, r2)) =>
           if (l1 == l2) BinExpr("*", BinExpr("+", r1, r2), l1)
@@ -135,28 +135,28 @@ object SimplifyBinExpr {
           BinExpr("**", x1, IntNum(2))
 
         // commutative properties:
-        case (e@BinExpr("+", exprL, exprR), expr) =>
-          if (exprL == expr) Simplifier(exprR)
-          else if (exprR == expr) Simplifier(exprL)
-          else BinExpr("-", Simplifier(e), Simplifier(expr))
-        case (expr, e@BinExpr("+", exprL, exprR)) =>
-          if (exprL == expr) Simplifier(Unary("-", exprR))
-          else if (exprR == expr) Simplifier(Unary("-", exprL))
-          else BinExpr("-", Simplifier(expr), Simplifier(e))
+        case (e@BinExpr("+", binExpressionLeft, binExpressionRight), binExpression) =>
+          if (binExpressionLeft == binExpression) Simplifier(binExpressionRight)
+          else if (binExpressionRight == binExpression) Simplifier(binExpressionLeft)
+          else BinExpr("-", Simplifier(e), Simplifier(binExpression))
+        case (binExpression, e@BinExpr("+", binExpressionLeft, binExpressionRight)) =>
+          if (binExpressionLeft == binExpression) Simplifier(Unary("-", binExpressionRight))
+          else if (binExpressionRight == binExpression) Simplifier(Unary("-", binExpressionLeft))
+          else BinExpr("-", Simplifier(binExpression), Simplifier(e))
 
-        case (exprL, exprR)      =>
-          val sL = Simplifier(exprL)
-          val sR = Simplifier(exprR)
-          if (sL != exprL || sR != exprR) Simplifier(BinExpr("-", sL, sR)) else BinExpr("-", sL, sR)
+        case (binExpressionLeft, binExpressionRight)      =>
+          val sL = Simplifier(binExpressionLeft)
+          val sR = Simplifier(binExpressionRight)
+          if (sL != binExpressionLeft || sR != binExpressionRight) Simplifier(BinExpr("-", sL, sR)) else BinExpr("-", sL, sR)
       }
 
       case ("+", left, right)    => (Simplifier(left), Simplifier(right)) match {
-        case (expr, IntNum(n)) if n == 0  => expr
-        case (IntNum(n), expr) if n == 0  => expr
-        case (expr, FloatNum(n)) if n == 0 => expr
-        case (FloatNum(n), expr) if n == 0 => expr
-        case (Unary("-", exprU), expr) => Simplifier(BinExpr("-", expr, exprU))
-        case (expr, Unary("-", exprU)) => Simplifier(BinExpr("-", expr, exprU))
+        case (binExpression, IntNum(n)) if n == 0  => binExpression
+        case (IntNum(n), binExpression) if n == 0  => binExpression
+        case (binExpression, FloatNum(n)) if n == 0 => binExpression
+        case (FloatNum(n), binExpression) if n == 0 => binExpression
+        case (Unary("-", binExpressionU), binExpression) => Simplifier(BinExpr("-", binExpression, binExpressionU))
+        case (binExpression, Unary("-", binExpressionU)) => Simplifier(BinExpr("-", binExpression, binExpressionU))
 
         // wzory sk. mnozenia:
         case (BinExpr("+", BinExpr("**", x1, IntNum(a)), BinExpr("*", BinExpr("*", x2, IntNum(b)), y2)), BinExpr("**", y3, IntNum(c)))
@@ -177,79 +177,79 @@ object SimplifyBinExpr {
             if (s1 != e1 || s2 != e2) Simplifier(BinExpr("+", s1, s2)) else BinExpr("+", s1, s2)
           }
 
-        case (exprL, exprR)      =>
-          val sL = Simplifier(exprL)
-          val sR = Simplifier(exprR)
-          if (sL != exprL || sR != exprR) Simplifier(BinExpr("+", sL, sR)) else BinExpr("+", sL, sR)
+        case (binExpressionLeft, binExpressionRight)      =>
+          val sL = Simplifier(binExpressionLeft)
+          val sR = Simplifier(binExpressionRight)
+          if (sL != binExpressionLeft || sR != binExpressionRight) Simplifier(BinExpr("+", sL, sR)) else BinExpr("+", sL, sR)
       }
 
       case ("*", left, right)    => (left, right) match {
-        case (expr, IntNum(n))   => if (n == 1) Simplifier(expr) else if (n == 0) IntNum(0) else {
-          val s = Simplifier(expr)
-          if (s != expr) Simplifier(BinExpr("*", s, IntNum(n))) else BinExpr("*", s, IntNum(n))
+        case (binExpression, IntNum(n))   => if (n == 1) Simplifier(binExpression) else if (n == 0) IntNum(0) else {
+          val s = Simplifier(binExpression)
+          if (s != binExpression) Simplifier(BinExpr("*", s, IntNum(n))) else BinExpr("*", s, IntNum(n))
         }
-        case (IntNum(n), expr)   => if (n == 1) Simplifier(expr) else if (n == 0) IntNum(0)   else {
-          val s = Simplifier(expr)
-          if (s != expr) Simplifier(BinExpr("*", s, IntNum(n))) else BinExpr("*", s, IntNum(n))
+        case (IntNum(n), binExpression)   => if (n == 1) Simplifier(binExpression) else if (n == 0) IntNum(0)   else {
+          val s = Simplifier(binExpression)
+          if (s != binExpression) Simplifier(BinExpr("*", s, IntNum(n))) else BinExpr("*", s, IntNum(n))
         }
-        case (expr, FloatNum(n)) => if (n == 1) Simplifier(expr) else if (n == 0) FloatNum(0) else {
-          val s = Simplifier(expr)
-          if (s != expr) Simplifier(BinExpr("*", s, FloatNum(n))) else BinExpr("*", s, FloatNum(n))
+        case (binExpression, FloatNum(n)) => if (n == 1) Simplifier(binExpression) else if (n == 0) FloatNum(0) else {
+          val s = Simplifier(binExpression)
+          if (s != binExpression) Simplifier(BinExpr("*", s, FloatNum(n))) else BinExpr("*", s, FloatNum(n))
         }
-        case (FloatNum(n), expr) => if (n == 1) Simplifier(expr) else if (n == 0) FloatNum(0) else {
-          val s = Simplifier(expr)
-          if (s != expr) Simplifier(BinExpr("*", s, FloatNum(n))) else BinExpr("*", s, FloatNum(n))
+        case (FloatNum(n), binExpression) => if (n == 1) Simplifier(binExpression) else if (n == 0) FloatNum(0) else {
+          val s = Simplifier(binExpression)
+          if (s != binExpression) Simplifier(BinExpr("*", s, FloatNum(n))) else BinExpr("*", s, FloatNum(n))
         }
 
         // power laws:
         case (BinExpr("**", leftL, rightL), BinExpr("**", leftR, rightR)) if leftL == leftR =>
           Simplifier(BinExpr("**", leftL, BinExpr("+", rightL, rightR))) // TODO: czy potrzebny wewnetrzny Simplifier?
 
-        case (expr, BinExpr("/", exprNum, exprDenom)) => Simplifier(BinExpr("/", BinExpr("*", expr, exprNum), exprDenom))
-        // case (BinExpr("/", exprNum, exprDenom), expr) => Simplifier(BinExpr("/", BinExpr("*", expr, exprNum), exprDenom))
-        case (exprL, exprR)      =>
-          val sL = Simplifier(exprL)
-          val sR = Simplifier(exprR)
-          if (sL != exprL || sR != exprR) Simplifier(BinExpr("*", sL, sR)) else BinExpr("*", sL, sR)
+        case (binExpression, BinExpr("/", binExpressionNum, binExpressionDenom)) => Simplifier(BinExpr("/", BinExpr("*", binExpression, binExpressionNum), binExpressionDenom))
+        // case (BinExpr("/", binExpressionNum, binExpressionDenom), binExpression) => Simplifier(BinExpr("/", BinExpr("*", binExpression, binExpressionNum), binExpressionDenom))
+        case (binExpressionLeft, binExpressionRight)      =>
+          val sL = Simplifier(binExpressionLeft)
+          val sR = Simplifier(binExpressionRight)
+          if (sL != binExpressionLeft || sR != binExpressionRight) Simplifier(BinExpr("*", sL, sR)) else BinExpr("*", sL, sR)
       }
 
       case ("/", left, right) => (left, right) match {
-        case (exprL, exprR) if exprL == exprR => IntNum(1)
+        case (binExpressionLeft, binExpressionRight) if binExpressionLeft == binExpressionRight => IntNum(1)
         // nazwy ponizej moga nie byc najbardziej czytelne, ale to raczej przez specyfike problemu :)
-        case (exprNum, BinExpr("/", denomNum, denomDenom)) =>
-          val sNum = Simplifier(exprNum)
+        case (binExpressionNum, BinExpr("/", denomNum, denomDenom)) =>
+          val sNum = Simplifier(binExpressionNum)
           val sDenomNum = Simplifier(denomNum)
           val sDenomDenom = Simplifier(denomDenom)
           sNum match {
             case BinExpr("/", sNumNum, sNumDenom) =>
               Simplifier(BinExpr("/", BinExpr("*", sNumNum, sDenomDenom), BinExpr("*", sNumDenom, sDenomNum)))
-            case expr => Simplifier(BinExpr("/", BinExpr("*", expr, sDenomDenom), sDenomNum))
+            case binExpression => Simplifier(BinExpr("/", BinExpr("*", binExpression, sDenomDenom), sDenomNum))
           }
 
         // power laws:
         case (BinExpr("**", leftL, rightL), BinExpr("**", leftR, rightR)) if leftL == leftR =>
           Simplifier(BinExpr("**", leftL, BinExpr("-", rightL, rightR))) // TODO: czy potrzebny wewnetrzny Simplifier?
 
-        case (expr, IntNum(n))   if n == 1 => Simplifier(expr)
-        case (expr, FloatNum(n)) if n == 1 => Simplifier(expr)
-        case (exprL, exprR) =>
-          val sL = Simplifier(exprL)
-          val sR = Simplifier(exprR)
-          if (sL != exprL || sR != exprR) Simplifier(BinExpr("/", sL, sR)) else BinExpr("/", sL, sR)
+        case (binExpression, IntNum(n))   if n == 1 => Simplifier(binExpression)
+        case (binExpression, FloatNum(n)) if n == 1 => Simplifier(binExpression)
+        case (binExpressionLeft, binExpressionRight) =>
+          val sL = Simplifier(binExpressionLeft)
+          val sR = Simplifier(binExpressionRight)
+          if (sL != binExpressionLeft || sR != binExpressionRight) Simplifier(BinExpr("/", sL, sR)) else BinExpr("/", sL, sR)
       }
 
       case ("**", left, right)    => (Simplifier(left), Simplifier(right)) match {
-        case (expr, IntNum(n))   => if (n == 1) Simplifier(expr) else if (n == 0) IntNum(1) else {
-          val s = Simplifier(expr)
-          if (s != expr) Simplifier(BinExpr("**", s, IntNum(n))) else BinExpr("**", s, IntNum(n))
+        case (binExpression, IntNum(n))   => if (n == 1) Simplifier(binExpression) else if (n == 0) IntNum(1) else {
+          val s = Simplifier(binExpression)
+          if (s != binExpression) Simplifier(BinExpr("**", s, IntNum(n))) else BinExpr("**", s, IntNum(n))
         }
         // power laws:
-        case (BinExpr("**", l, r), expr) => Simplifier(BinExpr("**", l, BinExpr("*", r, expr)))
+        case (BinExpr("**", l, r), binExpression) => Simplifier(BinExpr("**", l, BinExpr("*", r, binExpression)))
 
-        case (exprL, exprR)      =>
-          val sL = Simplifier(exprL)
-          val sR = Simplifier(exprR)
-          if (sL != exprL || sR != exprR) Simplifier(BinExpr("**", sL, sR)) else BinExpr("**", sL, sR)
+        case (binExpressionLeft, binExpressionRight)      =>
+          val sL = Simplifier(binExpressionLeft)
+          val sR = Simplifier(binExpressionRight)
+          if (sL != binExpressionLeft || sR != binExpressionRight) Simplifier(BinExpr("**", sL, sR)) else BinExpr("**", sL, sR)
       }
 
       case ("and", left, right) =>
@@ -258,12 +258,12 @@ object SimplifyBinExpr {
         (sLeft, sRight) match {
           case (_, FalseConst()) => FalseConst()
           case (FalseConst(), _) => FalseConst()
-          case (expr, TrueConst()) => expr
-          case (TrueConst(), expr) => expr
-          case (exprL, exprR) if exprL == exprR => exprL
-          case (exprL, exprR) =>
-            if (exprL != left || exprR != right) Simplifier(BinExpr("and", exprL, exprR))
-            else BinExpr("and", exprL, exprR)
+          case (binExpression, TrueConst()) => binExpression
+          case (TrueConst(), binExpression) => binExpression
+          case (binExpressionLeft, binExpressionRight) if binExpressionLeft == binExpressionRight => binExpressionLeft
+          case (binExpressionLeft, binExpressionRight) =>
+            if (binExpressionLeft != left || binExpressionRight != right) Simplifier(BinExpr("and", binExpressionLeft, binExpressionRight))
+            else BinExpr("and", binExpressionLeft, binExpressionRight)
         }
 
       case ("or", left, right) =>
@@ -272,15 +272,15 @@ object SimplifyBinExpr {
         (sLeft, sRight) match {
           case (_, TrueConst()) => TrueConst()
           case (TrueConst(), _) => TrueConst()
-          case (expr, FalseConst()) => expr
-          case (FalseConst(), expr) => expr
-          case (exprL, exprR) if exprL == exprR => exprL
-          case (exprL, exprR) =>
-            if (exprL != left || exprR != right) Simplifier(BinExpr("or", exprL, exprR))
-            else BinExpr("or", exprL, exprR)
+          case (binExpression, FalseConst()) => binExpression
+          case (FalseConst(), binExpression) => binExpression
+          case (binExpressionLeft, binExpressionRight) if binExpressionLeft == binExpressionRight => binExpressionLeft
+          case (binExpressionLeft, binExpressionRight) =>
+            if (binExpressionLeft != left || binExpressionRight != right) Simplifier(BinExpr("or", binExpressionLeft, binExpressionRight))
+            else BinExpr("or", binExpressionLeft, binExpressionRight)
         }
 
-      case (_, _,_) => expr
+      case (_, _,_) => binExpression
 
     }
 
