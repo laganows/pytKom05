@@ -1,14 +1,11 @@
 package simplifier
 
 import AST._
-import math.pow
 
 // to implement
 // avoid one huge match of cases
 // take into account non-greedy strategies to resolve cases with power laws
 object Simplifier {
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
   def apply(node: Node) = simplify(node)
 
   def simplify(node: Node): Node = node match {
@@ -20,57 +17,33 @@ object Simplifier {
     //case n: NodeList => SimplifyNodeList(n)
     case n: Tuple => Tuple(n.list map simplify)
 
-    // konkatenacja tupli i list na samym poczatku (albowiem j.w.):
-    case BinExpr("+", Tuple(l1), Tuple(l2)) => Tuple((l1 ++ l2) map simplify)
-    case BinExpr("+", ElemList(l1), ElemList(l2)) => ElemList((l1 ++ l2) map simplify)
-
     // usuwanie petli z falszywym warunkiem:
     case WhileInstr(cond, body) =>
       val sCond = simplify(cond)
       sCond match {
         case FalseConst() => EmptyInstr()
-        case _            => WhileInstr(sCond, simplify(body))
+        case (_) => WhileInstr(sCond, simplify(body))
       }
 
-    case IfElseInstr(cond, left, right) =>
-      val sCond = simplify(cond)
-      sCond match {
-        case TrueConst()  => simplify(left)
-        case FalseConst() => simplify(right)
-        case _            => IfElseInstr(sCond, simplify(left), simplify(right))
-      }
+    case n: IfElseInstr => SimplifyIfElseInstr(n)
 
-    case IfInstr(cond, left) =>
-      val sCond = simplify(cond)
-      sCond match {
-        case TrueConst()  => simplify(left)
-        case FalseConst() => EmptyInstr()
-        case _            => IfInstr(sCond, simplify(left))
-      }
+    case n: IfInstr => SimplifyIfInstr(n)
 
-    case IfElseExpr(cond, left, right) =>
-      val sCond = simplify(cond)
-      sCond match {
-        case TrueConst()  => simplify(left)
-        case FalseConst() => simplify(right)
-        case _            => IfElseExpr(sCond, simplify(left), simplify(right))
-      }
+    case n: IfElseExpr  => SimplifyIfElseExpr(n)
 
     case Assignment(Variable(x), expr) => expr match {
       case Variable(y) if x == y => EmptyInstr()
-      case _                     => Assignment(Variable(x), simplify(expr))
+      case (_) => Assignment(Variable(x), simplify(expr))
     }
 
-    // <ewaluacja wyrazen> -------------------------------------------------------------------------------
+    // operacje arytmetyczne
     case n: BinExpr => SimplifyBinExpr(n)
 
-    // <upraszczanie wyrazen unarnych> --------------------------------------------------------------
+    // wyrazenia unarne
     case n: Unary => SimplifyUnaryOpr(n)
 
     case n: NodeList => SimplifyNodeList(n)
 
-    // jesli mamy liste node'ow, to upraszczamy kazdy element z osobna:
-    // w pozostalych przypadkach nie da sie juz nic uproscic:
     case n => n
   }
 

@@ -227,3 +227,122 @@
 <parserSpec-results timestamp="1452166237762"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="216" expectations="1" failures="1" examples="1"></stats></result>
 </parserSpec-results>
 <parserSpec-stats timestamp="1452166237794"><stats time="50" expectations="19" failures="1" successes="18" examples="19"></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452267262952"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="365" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452267262993"><stats time="37" expectations="19" failures="1" successes="18" examples="19"></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452267417791"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="281" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452267417824"><stats time="40" expectations="19" failures="1" successes="18" examples="19"></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452267598597"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="264" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452267598637"><stats time="33" expectations="19" failures="1" successes="18" examples="19"></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452267715268"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="281" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452267715312"><stats time="47" expectations="19" failures="1" successes="18" examples="19"></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452267756703"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="274" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452267756743"><stats time="41" expectations="19" failures="1" successes="18" examples="19"></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452267794210"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="325" expectations="1" failures="1" examples="1"></stats></result>
+<result location="parserSpec (Specs.scala:66)" id="-53824131"><stats time="321" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452267794245"><stats time="32" expectations="19" failures="2" successes="17" examples="19"><trend><stats time="32" failures="1" successes="-1"></stats></trend></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452268028743"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="196" expectations="1" failures="1" examples="1"></stats></result>
+<result location="parserSpec (Specs.scala:66)" id="-53824131"><stats time="322" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452268028769"><stats time="35" expectations="19" failures="2" successes="17" examples="19"></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452268065650"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="262" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452268065685"><stats time="35" expectations="19" failures="1" successes="18" examples="19"><trend><stats time="35" failures="-1" successes="1"></stats></trend></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452268107829"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="307" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452268107858"><stats time="36" expectations="19" failures="1" successes="18" examples="19"></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452268332998"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="292" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452268333033"><stats time="48" expectations="19" failures="1" successes="18" examples="19"></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452268355363"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="291" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452268355415"><stats time="36" expectations="19" failures="1" successes="18" examples="19"></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452268399583"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="344" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452268399656"><stats time="48" expectations="19" failures="1" successes="18" examples="19"></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452268480650"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="318" expectations="1" failures="1" examples="1"></stats></result>
+<result location="parserSpec (Specs.scala:70)" id="-1321869282"><stats time="518" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452268480685"><stats time="42" expectations="19" failures="2" successes="17" examples="19"><trend><stats time="42" failures="1" successes="-1"></stats></trend></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452268621265"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="296" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452268621294"><stats time="35" expectations="19" failures="1" successes="18" examples="19"><trend><stats time="35" failures="-1" successes="1"></stats></trend></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452268661296"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="255" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452268661327"><stats time="31" expectations="19" failures="1" successes="18" examples="19"></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452268694950"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="295" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452268694975"><stats time="31" expectations="19" failures="1" successes="18" examples="19"></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452268754899"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="269" expectations="1" failures="1" examples="1"></stats></result>
+<result location="parserSpec (Specs.scala:70)" id="-1321869282"><stats time="248" expectations="1" errors="1" examples="1"></stats></result>
+<result location="parserSpec (Specs.scala:82)" id="1634678408"><stats time="243" expectations="1" errors="1" examples="1"></stats></result>
+<result location="parserSpec (Specs.scala:121)" id="-1465978271"><stats time="4" expectations="1" errors="1" examples="1"></stats></result>
+<result location="parserSpec (Specs.scala:127)" id="-1419505266"><stats time="30" expectations="1" errors="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452268754933"><stats time="28" expectations="19" failures="1" errors="4" successes="14" examples="19"><trend><stats time="28" errors="4" successes="-4"></stats></trend></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452268788241"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="279" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452268788271"><stats time="36" expectations="19" failures="1" successes="18" examples="19"><trend><stats time="36" errors="-4" successes="4"></stats></trend></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452268834671"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="276" expectations="1" failures="1" examples="1"></stats></result>
+<result location="parserSpec (Specs.scala:70)" id="-1321869282"><stats time="281" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452268834701"><stats time="43" expectations="19" failures="2" successes="17" examples="19"><trend><stats time="43" failures="1" successes="-1"></stats></trend></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452268864868"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="266" expectations="1" failures="1" examples="1"></stats></result>
+<result location="parserSpec (Specs.scala:88)" id="64717284"><stats time="119" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452268864906"><stats time="29" expectations="19" failures="2" successes="17" examples="19"></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452268890049"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="217" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452268890075"><stats time="33" expectations="19" failures="1" successes="18" examples="19"><trend><stats time="33" failures="-1" successes="1"></stats></trend></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452268944784"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="285" expectations="1" failures="1" examples="1"></stats></result>
+<result location="parserSpec (Specs.scala:70)" id="-1321869282"><stats time="274" expectations="1" errors="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452268944824"><stats time="29" expectations="19" failures="1" errors="1" successes="17" examples="19"><trend><stats time="29" errors="1" successes="-1"></stats></trend></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452268981716"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="296" expectations="1" failures="1" examples="1"></stats></result>
+<result location="parserSpec (Specs.scala:70)" id="-1321869282"><stats time="300" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452268981753"><stats time="40" expectations="19" failures="2" successes="17" examples="19"><trend><stats time="40" failures="1" errors="-1"></stats></trend></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452269006445"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="225" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452269006473"><stats time="42" expectations="19" failures="1" successes="18" examples="19"><trend><stats time="42" failures="-1" successes="1"></stats></trend></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452269034391"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="371" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452269034423"><stats time="32" expectations="19" failures="1" successes="18" examples="19"></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452269070790"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="266" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452269070832"><stats time="32" expectations="19" failures="1" successes="18" examples="19"></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452269127359"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="301" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452269127398"><stats time="35" expectations="19" failures="1" successes="18" examples="19"></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452269173748"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="277" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452269173783"><stats time="46" expectations="19" failures="1" successes="18" examples="19"></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452269215254"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="293" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452269215290"><stats time="33" expectations="19" failures="1" successes="18" examples="19"></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452269253740"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="302" expectations="1" failures="1" examples="1"></stats></result>
+<result location="parserSpec (Specs.scala:98)" id="612618308"><stats time="66" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452269253778"><stats time="38" expectations="19" failures="2" successes="17" examples="19"><trend><stats time="38" failures="1" successes="-1"></stats></trend></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452269291115"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="231" expectations="1" failures="1" examples="1"></stats></result>
+<result location="parserSpec (Specs.scala:98)" id="612618308"><stats time="38" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452269291148"><stats time="34" expectations="19" failures="2" successes="17" examples="19"></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452269319540"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="271" expectations="1" failures="1" examples="1"></stats></result>
+<result location="parserSpec (Specs.scala:127)" id="-1419505266"><stats time="33" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452269319575"><stats time="41" expectations="19" failures="2" successes="17" examples="19"></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452269352286"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="374" expectations="1" failures="1" examples="1"></stats></result>
+<result location="parserSpec (Specs.scala:88)" id="64717284"><stats time="136" expectations="1" failures="1" examples="1"></stats></result>
+<result location="parserSpec (Specs.scala:98)" id="612618308"><stats time="76" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452269352321"><stats time="31" expectations="19" failures="3" successes="16" examples="19"><trend><stats time="31" failures="1" successes="-1"></stats></trend></stats></parserSpec-stats>
+<parserSpec-results timestamp="1452269392956"><result location="parserSpec (Specs.scala:50)" id="1464472302"><stats time="281" expectations="1" failures="1" examples="1"></stats></result>
+<result location="parserSpec (Specs.scala:88)" id="64717284"><stats time="104" expectations="1" failures="1" examples="1"></stats></result>
+</parserSpec-results>
+<parserSpec-stats timestamp="1452269392991"><stats time="31" expectations="19" failures="2" successes="17" examples="19"><trend><stats time="31" failures="-1" successes="1"></stats></trend></stats></parserSpec-stats>

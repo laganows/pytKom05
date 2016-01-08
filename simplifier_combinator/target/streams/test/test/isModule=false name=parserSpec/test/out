@@ -16,7 +16,18 @@
 [0m[[0minfo[0m] [0m[37m[0m[32m+[0m recognize tuples[37m[0m[0m
 [0m[[0minfo[0m] [0m[37m[0m[32m+[0m recognize power laws[37m[0m[0m
 [0m[[0minfo[0m] [0m[37m[0m[32m+[0m evaluate constants[37m[0m[0m
-[0m[[0minfo[0m] [0m[37m[0m[32m+[0m simplify division[37m[0m[0m
+[0m[[0minfo[0m] [0m[37m[0m[37m[33mx[0m simplify division[0m[0m
+[0m[[31merror[0m] [0m   'NodeList(List(BinExpr(/,IntNum(1),BinExpr(/,IntNum(1),Variable(x)))))'[0m
+[0m[[31merror[0m] [0m   [0m
+[0m[[31merror[0m] [0m    is not equal to [0m
+[0m[[31merror[0m] [0m   [0m
+[0m[[31merror[0m] [0m   'NodeList(List(Variable(x)))' (Specs.scala:93)[0m
+[0m[[0minfo[0m] [0m [0m
+[0m[[31merror[0m] [0mExpected: NodeList(List(Variable(x)))[0m
+[0m[[0minfo[0m] [0m [0m
+[0m[[31merror[0m] [0mActual:   NodeList(List(BinExpr(/,IntNum(1),BinExpr(/,IntNum(1),Variable(x)))))[0m
+[0m[[0minfo[0m] [0m [0m
+[0m[[0minfo[0m] [0m[37m[0m[0m
 [0m[[0minfo[0m] [0m[37m[0m[32m+[0m simplify expressions[37m[0m[0m
 [0m[[0minfo[0m] [0m[37m[0m[32m+[0m understand commutativity[37m[0m[0m
 [0m[[0minfo[0m] [0m[37m[0m[32m+[0m understand distributive property of multiplication[37m[0m[0m
@@ -31,6 +42,6 @@
 [0m[[0minfo[0m] [0m[37m[0m[32m+[0m remove while loop with False condition[37m[0m[0m
 [0m[[0minfo[0m] [0m[37m[0m[37m[0m[0m
 [0m[[0minfo[0m] [0m[37m[0mTotal for specification parserSpec[0m
-[0m[[0minfo[0m] [0m[36mFinished in 50 ms[0m[0m
-[0m[[0minfo[0m] [0m[36m[0m[36m19 examples, 1 failure, 0 error[0m[0m
+[0m[[0minfo[0m] [0m[36mFinished in 31 ms[0m[0m
+[0m[[0minfo[0m] [0m[36m[0m[36m19 examples, 2 failures, 0 error[0m[0m
 [0m[[0minfo[0m] [0m [0m
