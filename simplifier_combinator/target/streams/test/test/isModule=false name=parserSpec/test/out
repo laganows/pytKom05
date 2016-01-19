@@ -3,20 +3,45 @@
 [0m[[0minfo[0m] [0m[37m[0m[37mparser should[0m[37m[0m[0m
 [0m[[0minfo[0m] [0m[37m[0m[32m+[0m fail on incorrect input[37m[0m[0m
 [0m[[0minfo[0m] [0m[37m[0m[32m+[0m recognize elif branches in if-else stmts[37m[0m[0m
-[0m[[0minfo[0m] [0m[37m[0m[37m[33mx[0m parse expressions[0m[0m
-[0m[[31merror[0m] [0m   '[1.5] parsed: TrueConst()' is not equal to 'TrueConst()' (Specs.scala:51)[0m
-[0m[[0minfo[0m] [0m [0m
-[0m[[31merror[0m] [0mExpected: TrueConst()[0m
-[0m[[0minfo[0m] [0m [0m
-[0m[[31merror[0m] [0mActual:   [1.5] parsed: TrueConst()[0m
-[0m[[0minfo[0m] [0m [0m
-[0m[[0minfo[0m] [0m[37m[0m[0m
+[0m[[0minfo[0m] [0m[37m[0m[32m+[0m parse expressions[37m[0m[0m
 [0m[[0minfo[0m] [0m[37m[0m[37m[0m[0m
 [0m[[0minfo[0m] [0m[37m[0m[37msimplifier should[0m[37m[0m[0m
 [0m[[0minfo[0m] [0m[37m[0m[32m+[0m recognize tuples[37m[0m[0m
-[0m[[0minfo[0m] [0m[37m[0m[32m+[0m recognize power laws[37m[0m[0m
+[0m[[0minfo[0m] [0m[37m[0m[37m[31m![0m recognize power laws[0m[0m
+[0m[[31merror[0m] [0m   MatchError: : (BinExpr(**,BinExpr(+,Variable(x),Variable(y)),IntNum(2)),BinExpr(**,Variable(x),IntNum(2))) (of class scala.Tuple2)  (SimplifyBinExpr.scala:93)[0m
+[0m[[31merror[0m] [0msimplifier.SimplifyBinExpr$.apply(SimplifyBinExpr.scala:93)[0m
+[0m[[31merror[0m] [0msimplifier.Simplifier$.simplify(simplifier.scala:40)[0m
+[0m[[31merror[0m] [0msimplifier.Simplifier$.apply(simplifier.scala:9)[0m
+[0m[[31merror[0m] [0msimplifier.SimplifyBinExpr$.apply(SimplifyBinExpr.scala:93)[0m
+[0m[[31merror[0m] [0msimplifier.Simplifier$.simplify(simplifier.scala:40)[0m
+[0m[[31merror[0m] [0msimplifier.SimplifyNodeList$$anonfun$apply$1.apply(SimplifyNodeList.scala:11)[0m
+[0m[[31merror[0m] [0msimplifier.SimplifyNodeList$$anonfun$apply$1.apply(SimplifyNodeList.scala:11)[0m
+[0m[[31merror[0m] [0msimplifier.SimplifyNodeList$.apply(SimplifyNodeList.scala:11)[0m
+[0m[[31merror[0m] [0msimplifier.Simplifier$.simplify(simplifier.scala:45)[0m
+[0m[[31merror[0m] [0mparserSpec.parseString(Specs.scala:15)[0m
+[0m[[31merror[0m] [0mparserSpec$$anonfun$2$$anonfun$apply$33$$anonfun$apply$48.apply(Specs.scala:78)[0m
+[0m[[31merror[0m] [0mparserSpec$$anonfun$2$$anonfun$apply$33$$anonfun$apply$48.apply(Specs.scala:78)[0m
+[0m[[31merror[0m] [0mparserSpec$$anonfun$2$$anonfun$apply$33.apply(Specs.scala:78)[0m
+[0m[[31merror[0m] [0mparserSpec$$anonfun$2$$anonfun$apply$33.apply(Specs.scala:70)[0m
+[0m[[0minfo[0m] [0m[37m[0m[0m
 [0m[[0minfo[0m] [0m[37m[0m[32m+[0m evaluate constants[37m[0m[0m
-[0m[[0minfo[0m] [0m[37m[0m[32m+[0m simplify division[37m[0m[0m
+[0m[[0minfo[0m] [0m[37m[0m[37m[31m![0m simplify division[0m[0m
+[0m[[31merror[0m] [0m   MatchError: : (Variable(x),Variable(z)) (of class scala.Tuple2)  (SimplifyBinExpr.scala:93)[0m
+[0m[[31merror[0m] [0msimplifier.SimplifyBinExpr$.apply(SimplifyBinExpr.scala:93)[0m
+[0m[[31merror[0m] [0msimplifier.Simplifier$.simplify(simplifier.scala:40)[0m
+[0m[[31merror[0m] [0msimplifier.Simplifier$.apply(simplifier.scala:9)[0m
+[0m[[31merror[0m] [0msimplifier.SimplifyBinExpr$.apply(SimplifyBinExpr.scala:206)[0m
+[0m[[31merror[0m] [0msimplifier.Simplifier$.simplify(simplifier.scala:40)[0m
+[0m[[31merror[0m] [0msimplifier.SimplifyNodeList$$anonfun$apply$1.apply(SimplifyNodeList.scala:11)[0m
+[0m[[31merror[0m] [0msimplifier.SimplifyNodeList$$anonfun$apply$1.apply(SimplifyNodeList.scala:11)[0m
+[0m[[31merror[0m] [0msimplifier.SimplifyNodeList$.apply(SimplifyNodeList.scala:11)[0m
+[0m[[31merror[0m] [0msimplifier.Simplifier$.simplify(simplifier.scala:45)[0m
+[0m[[31merror[0m] [0mparserSpec.parseString(Specs.scala:15)[0m
+[0m[[31merror[0m] [0mparserSpec$$anonfun$2$$anonfun$apply$59$$anonfun$apply$70.apply(Specs.scala:94)[0m
+[0m[[31merror[0m] [0mparserSpec$$anonfun$2$$anonfun$apply$59$$anonfun$apply$70.apply(Specs.scala:94)[0m
+[0m[[31merror[0m] [0mparserSpec$$anonfun$2$$anonfun$apply$59.apply(Specs.scala:94)[0m
+[0m[[31merror[0m] [0mparserSpec$$anonfun$2$$anonfun$apply$59.apply(Specs.scala:88)[0m
+[0m[[0minfo[0m] [0m[37m[0m[0m
 [0m[[0minfo[0m] [0m[37m[0m[32m+[0m simplify expressions[37m[0m[0m
 [0m[[0minfo[0m] [0m[37m[0m[32m+[0m understand commutativity[37m[0m[0m
 [0m[[0minfo[0m] [0m[37m[0m[32m+[0m understand distributive property of multiplication[37m[0m[0m
@@ -31,6 +56,6 @@
 [0m[[0minfo[0m] [0m[37m[0m[32m+[0m remove while loop with False condition[37m[0m[0m
 [0m[[0minfo[0m] [0m[37m[0m[37m[0m[0m
 [0m[[0minfo[0m] [0m[37m[0mTotal for specification parserSpec[0m
-[0m[[0minfo[0m] [0m[36mFinished in 38 ms[0m[0m
-[0m[[0minfo[0m] [0m[36m[0m[36m19 examples, 1 failure, 0 error[0m[0m
+[0m[[0minfo[0m] [0m[36mFinished in 30 ms[0m[0m
+[0m[[0minfo[0m] [0m[36m[0m[36m19 examples, 0 failure, 2 errors[0m[0m
 [0m[[0minfo[0m] [0m [0m

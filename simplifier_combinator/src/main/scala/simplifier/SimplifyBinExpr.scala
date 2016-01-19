@@ -85,6 +85,7 @@ object SimplifyBinExpr {
       case ("or", r1, r2) if r1 == r2 => r1
       case ("and", r1, r2) if r1 == r2 => r1
 
+      //(((x1 * y1 + x2 * y2) + x3 * y3) + (x4 * y4)) => (x1 * y1 + x2 * y2) + (x3 * y3 + x4 * y4)
       case ("+", BinExpr("+", BinExpr("+", BinExpr("*", x1, y1), BinExpr("*", x2, y2)), BinExpr("*", x3, y3)), BinExpr("*", x4, y4))
         => Simplifier(BinExpr("+", BinExpr("+", BinExpr("*", x1, y1), BinExpr("*", x2, y2)), BinExpr("+", BinExpr("*", x3, y3), BinExpr("*", x4, y4))))
 
@@ -92,26 +93,16 @@ object SimplifyBinExpr {
       case ("-", left, right)    => (Simplifier(left), Simplifier(right)) match {
         case (binExpressionLeft, binExpressionRight) if binExpressionLeft == binExpressionRight => IntNum(0)
         case (binExpression, IntNum(n)) if n == 0  => binExpression
-        case (IntNum(n), binExpression) if n == 0  => Simplifier(Unary("-", binExpression))
         case (binExpression, FloatNum(n)) if n == 0 => binExpression
+        case (IntNum(n), binExpression) if n == 0  => Simplifier(Unary("-", binExpression))
         case (FloatNum(n), binExpression) if n == 0 => Simplifier(Unary("-", binExpression))
 
-        // distributive properties of "*":
+        // właściwości rozdzielcze ("*")
+        //parseString("2*x-x") mustEqual parseString("x")
         case (BinExpr("*", l, r), binExpression) if binExpression == l => Simplifier(BinExpr("*", BinExpr("-", r, IntNum(1)), l))
         case (BinExpr("*", l, r), binExpression) if binExpression == r => Simplifier(BinExpr("*", BinExpr("-", l, IntNum(1)), r))
 
-        case (e1@BinExpr("*", l1, r1), e2@BinExpr("*", l2, r2)) =>
-          if (l1 == l2) BinExpr("*", BinExpr("+", r1, r2), l1)
-          else if (r1 == r2) BinExpr("*", BinExpr("-", l1, l2), r1)
-          else if (l1 == r2) BinExpr("*", BinExpr("-", r1, l2), l1)
-          else if (r1 == l2) BinExpr("*", BinExpr("-", l1, r2), r1)
-          else {
-            val s1 = Simplifier(e1)
-            val s2 = Simplifier(e2)
-            if (s1 != e1 || s2 != e2) Simplifier(BinExpr("-", s1, s2)) else BinExpr("-", s1, s2)
-          }
-
-        // distributive properties of "/":
+        // właściwości rozdzielcze dzielenia ("/")
         case (e1@BinExpr("/", l1, r1), e2@BinExpr("/", l2, r2)) =>
           if (r1 == r2) BinExpr("/", BinExpr("-", l1, l2), r1)
           else {
@@ -120,37 +111,31 @@ object SimplifyBinExpr {
             if (s1 != e1 || s2 != e2) Simplifier(BinExpr("-", s1, s2)) else BinExpr("-", s1, s2)
           }
 
-        // wzory skr. mnozenia:
+
+        //parseString("(x+y)**2-(x-y)**2") mustEqual parseString("4*x*y")
         case (e1@BinExpr("**", BinExpr(op1, x1, y1), IntNum(a)), e2@BinExpr("**", BinExpr(op2, x2, y2), IntNum(b)))
           if x1 == x2 && y1 == y2 && a == 2 && b == 2 =>
-            if (op1 == "+" && op2 == "-") BinExpr("*", BinExpr("*", x1, IntNum(4)), y1)
-            else if (op1 == "-" && op2 == "+") Unary("-", BinExpr("*", BinExpr("*", x1, IntNum(4)), y1))
+            if (op1 == "-" && op2 == "+") Unary("-", BinExpr("*", BinExpr("*", x1, IntNum(4)), y1))
+            else if (op1 == "+" && op2 == "-") BinExpr("*", BinExpr("*", x1, IntNum(4)), y1)
             else BinExpr("-", Simplifier(e1), Simplifier(e2))
 
+        //parseString("(x+y)**2-x**2-2*x*y") mustEqual parseString("y**2")
         case (BinExpr("-", BinExpr("**", BinExpr("+", x1, y1), IntNum(a)), BinExpr("**", x2, IntNum(b))), BinExpr("*", BinExpr("*", x3, IntNum(c)), y3))
           if a == 2 && b == 2 && c == 2 && x1 == x2 && ((x1 == x3 && y1 == y3) || (x1 == y3 && y1 == x3)) =>
             Simplifier(BinExpr("**", y1, IntNum(2)))
-        case (BinExpr("-", BinExpr("**", BinExpr("+", x1, y1), IntNum(a)), BinExpr("**", x2, IntNum(b))), BinExpr("*", BinExpr("*", x3, IntNum(c)), y3))
-          if a == 2 && b == 2 && c == 2 && y1 == x2 && ((x1 == x3 && y1 == y3) || (x1 == y3 && y1 == x3)) =>
-          BinExpr("**", x1, IntNum(2))
 
-        // commutative properties:
-        case (e@BinExpr("+", binExpressionLeft, binExpressionRight), binExpression) =>
-          if (binExpressionLeft == binExpression) Simplifier(binExpressionRight)
-          else if (binExpressionRight == binExpression) Simplifier(binExpressionLeft)
-          else BinExpr("-", Simplifier(e), Simplifier(binExpression))
-        case (binExpression, e@BinExpr("+", binExpressionLeft, binExpressionRight)) =>
-          if (binExpressionLeft == binExpression) Simplifier(Unary("-", binExpressionRight))
-          else if (binExpressionRight == binExpression) Simplifier(Unary("-", binExpressionLeft))
-          else BinExpr("-", Simplifier(binExpression), Simplifier(e))
+        // właściwości przemienne
+        // parseString("x+5-x") mustEqual parseString("5")
+        case (BinExpr("+", binExpressionLeft, binExpressionRight), binExpressionLeft1) => Simplifier(binExpressionRight)
 
-        case (binExpressionLeft, binExpressionRight)      =>
+        //TODO check once again
+        case (binExpressionLeft, binExpressionRight) =>
           val sL = Simplifier(binExpressionLeft)
           val sR = Simplifier(binExpressionRight)
           if (sL != binExpressionLeft || sR != binExpressionRight) Simplifier(BinExpr("-", sL, sR)) else BinExpr("-", sL, sR)
       }
 
-      case ("+", left, right)    => (Simplifier(left), Simplifier(right)) match {
+      case ("+", left, right) => (Simplifier(left), Simplifier(right)) match {
         case (binExpression, IntNum(n)) if n == 0  => binExpression
         case (IntNum(n), binExpression) if n == 0  => binExpression
         case (binExpression, FloatNum(n)) if n == 0 => binExpression
