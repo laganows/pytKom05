@@ -136,7 +136,7 @@ class Parser extends JavaTokenParsers {
         case NodeList(x) => ElemList(x)
         case l => { println("Warn: expr_list_comma didn't return NodeList"); l }
        }
-    | "("~>expr_list_comma<~")" ^^ { ///////////////////////////////dodane//
+    | "("~>expr_list_comma<~")" ^^ { 
         case NodeList(x) => Tuple(x)
         case l => println("Warn: expr_list_comma [tuple] didn't return NodeList"); l
       }

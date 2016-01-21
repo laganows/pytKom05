@@ -120,9 +120,9 @@ object SimplifyBinExpr {
 
 
         case (binExpressionLeft, binExpressionRight) =>
-          val sL = Simplifier(binExpressionLeft)
-          val sR = Simplifier(binExpressionRight)
-          if (sL != binExpressionLeft || sR != binExpressionRight) Simplifier(BinExpr("-", sL, sR)) else BinExpr("-", sL, sR)
+          val left1 = Simplifier(binExpressionLeft)
+          val right1 = Simplifier(binExpressionRight)
+          if (left1 != binExpressionLeft || right1 != binExpressionRight) Simplifier(BinExpr("-", left1, right1)) else BinExpr("-", left1, right1)
       }
 
       case ("+", left, right) => (Simplifier(left), Simplifier(right)) match {
@@ -151,9 +151,9 @@ object SimplifyBinExpr {
           // }
 
         case (binExpressionLeft, binExpressionRight) =>
-          val sL = Simplifier(binExpressionLeft)
-          val sR = Simplifier(binExpressionRight)
-          if (sL != binExpressionLeft || sR != binExpressionRight) Simplifier(BinExpr("+", sL, sR)) else BinExpr("+", sL, sR)
+          val left1 = Simplifier(binExpressionLeft)
+          val right1 = Simplifier(binExpressionRight)
+          if (left1 != binExpressionLeft || right1 != binExpressionRight) Simplifier(BinExpr("+", left1, right1)) else BinExpr("+", left1, right1)
       }
 
       case ("*", left, right)    => (left, right) match {
@@ -181,9 +181,9 @@ object SimplifyBinExpr {
         case (binExpression, BinExpr("/", binExpressionNum, binExpressionDenom)) => Simplifier(BinExpr("/", BinExpr("*", binExpression, binExpressionNum), binExpressionDenom))
 
         case (binExpressionLeft, binExpressionRight) =>
-          val sL = Simplifier(binExpressionLeft)
-          val sR = Simplifier(binExpressionRight)
-          if (sL != binExpressionLeft || sR != binExpressionRight) Simplifier(BinExpr("*", sL, sR)) else BinExpr("*", sL, sR)
+          val left1 = Simplifier(binExpressionLeft)
+          val right1 = Simplifier(binExpressionRight)
+          if (left1 != binExpressionLeft || right1 != binExpressionRight) Simplifier(BinExpr("*", left1, right1)) else BinExpr("*", left1, right1)
       }
 
       case ("/", left, right) => (left, right) match {
@@ -206,9 +206,9 @@ object SimplifyBinExpr {
           Simplifier(BinExpr("**", leftL, BinExpr("-", rightL, rightR)))
 
         case (binExpressionLeft, binExpressionRight) =>
-          val sL = Simplifier(binExpressionLeft)
-          val sR = Simplifier(binExpressionRight)
-          if (sL != binExpressionLeft || sR != binExpressionRight) Simplifier(BinExpr("/", sL, sR)) else BinExpr("/", sL, sR)
+          val left1 = Simplifier(binExpressionLeft)
+          val right1 = Simplifier(binExpressionRight)
+          if (left1 != binExpressionLeft || right1 != binExpressionRight) Simplifier(BinExpr("/", left1, right1)) else BinExpr("/", left1, right1)
       }
 
       case ("**", left, right)    => (Simplifier(left), Simplifier(right)) match {
@@ -221,15 +221,15 @@ object SimplifyBinExpr {
         case (BinExpr("**", l, r), binExpression) => Simplifier(BinExpr("**", l, BinExpr("*", r, binExpression)))
 
         case (binExpressionLeft, binExpressionRight) =>
-          val sL = Simplifier(binExpressionLeft)
-          val sR = Simplifier(binExpressionRight)
-          if (sL != binExpressionLeft || sR != binExpressionRight) Simplifier(BinExpr("**", sL, sR)) else BinExpr("**", sL, sR)
+          val left1 = Simplifier(binExpressionLeft)
+          val right1 = Simplifier(binExpressionRight)
+          if (left1 != binExpressionLeft || right1 != binExpressionRight) Simplifier(BinExpr("**", left1, right1)) else BinExpr("**", left1, right1)
       }
 
       case ("and", left, right) =>
-        val sLeft = Simplifier(left)
-        val sRight = Simplifier(right)
-        (sLeft, sRight) match {
+        val left1 = Simplifier(left)
+        val right1 = Simplifier(right)
+        (left1, right1) match {
           case (_, FalseConst()) => FalseConst()
           case (binExpression, TrueConst()) => binExpression
           case (FalseConst(), _) => FalseConst()
@@ -240,9 +240,9 @@ object SimplifyBinExpr {
         }
 
       case ("or", left, right) =>
-        val sLeft = Simplifier(left)
-        val sRight = Simplifier(right)
-        (sLeft, sRight) match {
+        val left1 = Simplifier(left)
+        val right1 = Simplifier(right)
+        (left1, right1) match {
           case (_, TrueConst()) => TrueConst()
           case (TrueConst(), _) => TrueConst()
           case (binExpression, FalseConst()) => binExpression

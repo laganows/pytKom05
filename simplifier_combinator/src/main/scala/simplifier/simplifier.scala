@@ -9,7 +9,7 @@ object Simplifier {
   def apply(node: Node) = simplify(node)
 
   def simplify(node: Node): Node = node match {
-    // usuwanie duplikatow ze slownikow:
+    //kasowanie duplikatow ze slownikow
     case KeyDatumList(list) => KeyDatumList(list.foldLeft(Map.empty[Node, KeyDatum])(
       (_map, kd) => _map + (kd.key -> kd)
     ).toList.map(p => p._2))
