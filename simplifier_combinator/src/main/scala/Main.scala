@@ -10,7 +10,7 @@ object Main {
   def main(args: Array[String]) {
 
       if(args.length == 0) {
-        println("Usage: sbt \"run filename ...\""); 
+        println("Usage: sbt \"run filename ...\"");
         return
       }
 
@@ -18,7 +18,7 @@ object Main {
 
       for (arg <- args) {
           try {
-              println("Parsing file: " + arg)     
+              println("Parsing file: " + arg)
               val reader = new FileReader(arg)
               val parseResult = parser.parseAll(reader)
               parseResult match {

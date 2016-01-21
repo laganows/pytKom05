@@ -22,7 +22,7 @@ object SimplifyIfInstr {
         val simplifiedCondition = Simplifier(condition)
         simplifiedCondition match {
           case TrueConst() => Simplifier(left)
-          case FalseConst() => EmptyInstr()
+          case FalseConst() => BlankInstruction()
           case (_) => IfInstr(simplifiedCondition, Simplifier(left))
         }
     }

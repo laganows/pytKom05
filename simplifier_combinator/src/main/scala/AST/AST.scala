@@ -1,15 +1,16 @@
 package AST
 
 object Priority {
-    val binary = Map("lambda" -> 1,
-                     "or" -> 2,
-                     "and" -> 3,
-                     "is" -> 8, "<" -> 8, ">" -> 8, ">=" -> 8, "<=" -> 8, "==" -> 8, "!=" -> 8,
-                     "+" -> 9,  "-" -> 9,
-                     "*" -> 10, "/" -> 10, "%" -> 10,
+    val binary = Map("lambda"->1,
+                     "or"->2,
+                     "and"->3,
+                     "is"->8, "<"->8, ">"->8, ">="->8, "<="->8, "=="->8, "!="->8,
+                     "+"->9,  "-"->9,
+                     "*"->10, "/"->10, "%"->10,
                      "**" -> 12)
 
-    val unary = Map("not" -> 4, "+" -> 12,  "-" -> 12)
+    val unary = Map("not"->4,
+                    "+"->12,  "-"->12)
 }
 
 // sealed trait Node would be also OK
@@ -18,8 +19,6 @@ sealed abstract class Node {
     val indent = " " * 4
 }
 
-
-// w prostych case classach nie trzeba przeciazac metody equals
 case class IntNum(value: Integer) extends Node {
     override def toStr = value.toString
 }
@@ -44,23 +43,16 @@ case class Variable(name: String) extends Node {
     override def toStr = name
 }
 
-// ale w bardziej zlozonych juz tak
 case class Unary(op: String, expr: Node) extends Node {
 
     override def toStr = {
-        var str  = expr.toStr 
+        var str  = expr.toStr
         expr match {
             case e@BinExpr(_,_,_) => if(Priority.binary(e.op)<=Priority.unary(op)) { str = "(" + str + ")" }
             case e@Unary(_,_) => if(Priority.unary(e.op)<=Priority.unary(op)) { str = "(" + str + ")" }
-            case _ => 
+            case _ =>
         }
         op + " " + str
-    }
-
-    override def equals(that: Any): Boolean = that match {
-        case Unary(thatOp, thatExpr) if thatOp == op && thatExpr == expr
-            => true
-        case _ => false
     }
 
 }
@@ -68,30 +60,30 @@ case class Unary(op: String, expr: Node) extends Node {
 case class BinExpr(op: String, left: Node, right: Node) extends Node {
 
     override def toStr = {
-        var leftStr  = left.toStr 
+        var leftStr  = left.toStr
         var rightStr = right.toStr
         left match {
             case l@(_:BinExpr) => if(Priority.binary(l.op)<Priority.binary(op)) { leftStr = "(" + leftStr + ")" }
             case l@(_:Unary) => if(Priority.unary(l.op)<Priority.binary(op)) { leftStr = "(" + leftStr + ")" }
-            case _ => 
+            case _ =>
         }
         right match {
             case r@BinExpr(_,_,_) => if(Priority.binary(r.op)<Priority.binary(op)) { rightStr = "(" + rightStr + ")" }
             case r@Unary(_,_) => if(Priority.unary(r.op)<Priority.binary(op)) { rightStr = "(" + rightStr + ")" }
-            case _ => 
+            case _ =>
         }
         leftStr + " " + op + " " + rightStr
     }
 
-    // magia pattern matchy
     override def equals(that: Any) = that match {
-        case BinExpr("+", l, r)   if l == right && r == left  && op == "+"   => true
-        case BinExpr("*", l, r)   if l == right && r == left  && op == "*"   => true
-        case BinExpr("and", l, r) if l == right && r == left  && op == "and" => true
-        case BinExpr("or", l, r)  if l == right && r == left  && op == "or"  => true
-        case BinExpr(o, l, r)     if l == left  && r == right && o  == op    => true
-        case _                                                               => false
+        case BinExpr("+", left1, right1) if left1 == right && right1 == left  && op == "+" => true
+        case BinExpr("*", left1, right1) if left1 == right && right1 == left  && op == "*" => true
+        case BinExpr("and", left1, right1) if left1 == right && right1 == left  && op == "and" => true
+        case BinExpr("or", left1, right1) if left1 == right && right1 == left  && op == "or" => true
+        case BinExpr(o, left1, right1) if left1 == left  && right1 == right && o  == op => true
+        case (_) => false
     }
+
 }
 
 case class IfElseExpr(cond: Node, left: Node, right: Node) extends Node {
@@ -139,7 +131,7 @@ case class WhileInstr(cond: Node, body: Node) extends Node {
 }
 
 case class InputInstr() extends Node {
-    override def toStr = "input()" 
+    override def toStr = "input()"
 }
 
 case class ReturnInstr(expr: Node) extends Node {
@@ -171,14 +163,14 @@ case class FunDef(name: String, formal_args: Node, body: Node) extends Node {
 case class LambdaDef(formal_args: Node, body: Node) extends Node {
     override def toStr = "lambda " + formal_args.toStr + ": " + body.toStr
 }
-        
+
 case class ClassDef(name: String, inherit_list: Node, suite: Node) extends Node {
     override def toStr = {
         val str = "\nclass " + name
         var inheritStr = ""
         val suiteStr = ":\n" + suite.toStr.replaceAll("(?m)^", indent)
         inherit_list match {
-            case NodeList(x) => if(x.length>0) inheritStr = "(" + x.map(_.toStr).mkString("", ",", "") + ")" 
+            case NodeList(x) => if(x.length>0) inheritStr = "(" + x.map(_.toStr).mkString("", ",", "") + ")"
             case _ =>
        }
        str + inheritStr + suiteStr
@@ -209,6 +201,6 @@ case class Tuple(list: List[Node]) extends Node {
                          else list.map(_.toStr).mkString("(", ",", ")")
 }
 
-case class EmptyInstr() extends Node {
-    override def toStr = ""
+case class BlankInstruction() extends Node {
+    override def toStr = null
 }

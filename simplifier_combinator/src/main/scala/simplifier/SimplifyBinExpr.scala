@@ -102,16 +102,6 @@ object SimplifyBinExpr {
         case (BinExpr("*", l, r), binExpression) if binExpression == l => Simplifier(BinExpr("*", BinExpr("-", r, IntNum(1)), l))
         case (BinExpr("*", l, r), binExpression) if binExpression == r => Simplifier(BinExpr("*", BinExpr("-", l, IntNum(1)), r))
 
-        // właściwości rozdzielcze dzielenia ("/")
-        case (e1@BinExpr("/", l1, r1), e2@BinExpr("/", l2, r2)) =>
-          if (r1 == r2) BinExpr("/", BinExpr("-", l1, l2), r1)
-          else {
-            val s1 = Simplifier(e1)
-            val s2 = Simplifier(e2)
-            if (s1 != e1 || s2 != e2) Simplifier(BinExpr("-", s1, s2)) else BinExpr("-", s1, s2)
-          }
-
-
         //parseString("(x+y)**2-(x-y)**2") mustEqual parseString("4*x*y")
         case (e1@BinExpr("**", BinExpr(op1, x1, y1), IntNum(a)), e2@BinExpr("**", BinExpr(op2, x2, y2), IntNum(b)))
           if x1 == x2 && y1 == y2 && a == 2 && b == 2 =>
@@ -128,7 +118,7 @@ object SimplifyBinExpr {
         // parseString("x+5-x") mustEqual parseString("5")
         case (BinExpr("+", binExpressionLeft, binExpressionRight), binExpressionLeft1) => Simplifier(binExpressionRight)
 
-        //TODO check once again
+
         case (binExpressionLeft, binExpressionRight) =>
           val sL = Simplifier(binExpressionLeft)
           val sR = Simplifier(binExpressionRight)
@@ -143,26 +133,24 @@ object SimplifyBinExpr {
         case (Unary("-", binExpressionU), binExpression) => Simplifier(BinExpr("-", binExpression, binExpressionU))
         case (binExpression, Unary("-", binExpressionU)) => Simplifier(BinExpr("-", binExpression, binExpressionU))
 
-        // wzory sk. mnozenia:
+        // wzor skroconego mnozenia
+        //parseString("x**2+2*x*y+y**2") mustEqual parseString("(x+y)**2")
         case (BinExpr("+", BinExpr("**", x1, IntNum(a)), BinExpr("*", BinExpr("*", x2, IntNum(b)), y2)), BinExpr("**", y3, IntNum(c)))
           if a == 2 && b == 2 && c == 2 && (x1 == x2 && y2 == y3) =>
             Simplifier(BinExpr("**", BinExpr("+", x1, y2), IntNum(2)))
-        case (BinExpr("+", BinExpr("**", x1, IntNum(a)), BinExpr("*", BinExpr("*", x2, IntNum(b)), y2)), BinExpr("**", y3, IntNum(c)))
-          if a == 2 && b == 2 && c == 2 && (x1 == y2 && x2 == y3) =>
-            Simplifier(BinExpr("**", BinExpr("+", x1, y3), IntNum(2)))
 
         case (e1@BinExpr("*", l1, r1), e2@BinExpr("*", l2, r2)) =>
           if (l1 == l2) BinExpr("*", BinExpr("+", r1, r2), l1)
-          else if (r1 == r2) BinExpr("*", BinExpr("+", l1, l2), r1)
-          else if (l1 == r2) BinExpr("*", BinExpr("+", r1, l2), l1)
-          else if (r1 == l2) BinExpr("*", BinExpr("+", l1, r2), r1)
-          else {
-            val s1 = Simplifier(e1)
-            val s2 = Simplifier(e2)
-            if (s1 != e1 || s2 != e2) Simplifier(BinExpr("+", s1, s2)) else BinExpr("+", s1, s2)
-          }
+          else BinExpr("*", BinExpr("+", l1, l2), r1)
+          //else if (l1 == r2) BinExpr("*", BinExpr("+", r1, l2), l1)
+          //else if (r1 == l2) BinExpr("*", BinExpr("+", l1, r2), r1)
+          // else {
+          //   val s1 = Simplifier(e1)
+          //   val s2 = Simplifier(e2)
+          //   if (s1 != e1 || s2 != e2) Simplifier(BinExpr("+", s1, s2)) else BinExpr("+", s1, s2)
+          // }
 
-        case (binExpressionLeft, binExpressionRight)      =>
+        case (binExpressionLeft, binExpressionRight) =>
           val sL = Simplifier(binExpressionLeft)
           val sR = Simplifier(binExpressionRight)
           if (sL != binExpressionLeft || sR != binExpressionRight) Simplifier(BinExpr("+", sL, sR)) else BinExpr("+", sL, sR)
@@ -186,13 +174,13 @@ object SimplifyBinExpr {
           if (s != binExpression) Simplifier(BinExpr("*", s, FloatNum(n))) else BinExpr("*", s, FloatNum(n))
         }
 
-        // power laws:
+        //potegowanie
         case (BinExpr("**", leftL, rightL), BinExpr("**", leftR, rightR)) if leftL == leftR =>
-          Simplifier(BinExpr("**", leftL, BinExpr("+", rightL, rightR))) // TODO: czy potrzebny wewnetrzny Simplifier?
+          Simplifier(BinExpr("**", leftL, BinExpr("+", rightL, rightR)))
 
         case (binExpression, BinExpr("/", binExpressionNum, binExpressionDenom)) => Simplifier(BinExpr("/", BinExpr("*", binExpression, binExpressionNum), binExpressionDenom))
-        // case (BinExpr("/", binExpressionNum, binExpressionDenom), binExpression) => Simplifier(BinExpr("/", BinExpr("*", binExpression, binExpressionNum), binExpressionDenom))
-        case (binExpressionLeft, binExpressionRight)      =>
+
+        case (binExpressionLeft, binExpressionRight) =>
           val sL = Simplifier(binExpressionLeft)
           val sR = Simplifier(binExpressionRight)
           if (sL != binExpressionLeft || sR != binExpressionRight) Simplifier(BinExpr("*", sL, sR)) else BinExpr("*", sL, sR)
@@ -200,7 +188,9 @@ object SimplifyBinExpr {
 
       case ("/", left, right) => (left, right) match {
         case (binExpressionLeft, binExpressionRight) if binExpressionLeft == binExpressionRight => IntNum(1)
-        // nazwy ponizej moga nie byc najbardziej czytelne, ale to raczej przez specyfike problemu :)
+        case (binExpression, IntNum(n))   if n == 1 => Simplifier(binExpression)
+        case (binExpression, FloatNum(n)) if n == 1 => Simplifier(binExpression)
+
         case (binExpressionNum, BinExpr("/", denomNum, denomDenom)) =>
           val sNum = Simplifier(binExpressionNum)
           val sDenomNum = Simplifier(denomNum)
@@ -211,12 +201,10 @@ object SimplifyBinExpr {
             case binExpression => Simplifier(BinExpr("/", BinExpr("*", binExpression, sDenomDenom), sDenomNum))
           }
 
-        // power laws:
+        // potegowanie
         case (BinExpr("**", leftL, rightL), BinExpr("**", leftR, rightR)) if leftL == leftR =>
-          Simplifier(BinExpr("**", leftL, BinExpr("-", rightL, rightR))) // TODO: czy potrzebny wewnetrzny Simplifier?
+          Simplifier(BinExpr("**", leftL, BinExpr("-", rightL, rightR)))
 
-        case (binExpression, IntNum(n))   if n == 1 => Simplifier(binExpression)
-        case (binExpression, FloatNum(n)) if n == 1 => Simplifier(binExpression)
         case (binExpressionLeft, binExpressionRight) =>
           val sL = Simplifier(binExpressionLeft)
           val sR = Simplifier(binExpressionRight)
@@ -228,10 +216,11 @@ object SimplifyBinExpr {
           val s = Simplifier(binExpression)
           if (s != binExpression) Simplifier(BinExpr("**", s, IntNum(n))) else BinExpr("**", s, IntNum(n))
         }
-        // power laws:
+
+        //potegowanie
         case (BinExpr("**", l, r), binExpression) => Simplifier(BinExpr("**", l, BinExpr("*", r, binExpression)))
 
-        case (binExpressionLeft, binExpressionRight)      =>
+        case (binExpressionLeft, binExpressionRight) =>
           val sL = Simplifier(binExpressionLeft)
           val sR = Simplifier(binExpressionRight)
           if (sL != binExpressionLeft || sR != binExpressionRight) Simplifier(BinExpr("**", sL, sR)) else BinExpr("**", sL, sR)
@@ -242,10 +231,9 @@ object SimplifyBinExpr {
         val sRight = Simplifier(right)
         (sLeft, sRight) match {
           case (_, FalseConst()) => FalseConst()
-          case (FalseConst(), _) => FalseConst()
           case (binExpression, TrueConst()) => binExpression
+          case (FalseConst(), _) => FalseConst()
           case (TrueConst(), binExpression) => binExpression
-          case (binExpressionLeft, binExpressionRight) if binExpressionLeft == binExpressionRight => binExpressionLeft
           case (binExpressionLeft, binExpressionRight) =>
             if (binExpressionLeft != left || binExpressionRight != right) Simplifier(BinExpr("and", binExpressionLeft, binExpressionRight))
             else BinExpr("and", binExpressionLeft, binExpressionRight)

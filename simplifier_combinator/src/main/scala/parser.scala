@@ -1,27 +1,26 @@
-
 import scala.util.parsing.combinator._
 import scala.util.parsing.input.Positional
 import AST._
 
 class Parser extends JavaTokenParsers {
 
-  val precedenceList: List[List[String]] = List(  ///////////////////////////////zmienione//
+  val precedenceList: List[List[String]] = List(
       List("is", ">=", "<=", "==", "!=", "<", ">"), // order matters also within inner list, longer op should go before shorter one, e.g. "<=" before "<", if one is a prefix of another
       List("+", "-"),
       List("*", "/", "%"),
-      List("**") ///////////////////////////////dodane//
+      List("**")
   )
 
   val minPrec = 0
   val maxPrec = precedenceList.length-1
-  
+
   protected override val whiteSpace = """(\t|\r|[ ]|#.*|(?s)/\*.*?\*/)+""".r
-  
+
   val id: Parser[String] = not(reserved) ~> """[a-zA-Z_]\w*""".r
-  
+
   val lpar = rep1(newl) ~ "{" ~ rep(newl)
   val rpar = rep(newl) ~ "}" ~ rep1(newl)
-  
+
   val newl: Parser[Node] = """(\r?\n)|\r""".r ^^ StringConst
 
   val reserved: Parser[String] = "and\\b".r |
@@ -41,7 +40,7 @@ class Parser extends JavaTokenParsers {
                                  "while\\b".r
 
   val floatLiteral: Parser[Double] = """\d+(\.\d*)|\.\d+""".r ^^ { _.toDouble }
-  
+
   val intLiteral: Parser[Integer] = """\d+""".r ^^ { _.toInt }
 
   def const: Parser[Node] = (
@@ -53,7 +52,7 @@ class Parser extends JavaTokenParsers {
   )
 
   def parseAll(input: java.io.FileReader): ParseResult[List[Node]] = parseAll(program, input)
-  
+
   // stands for def program: Parser[List[Node]] = rep(statement|newl)
   def program: Parser[List[Node]] = rep(newl) ~> rep(statement <~ rep(newl))
 
@@ -66,7 +65,7 @@ class Parser extends JavaTokenParsers {
 
 
   def expression: Parser[Node] = (
-        ("lambda"~> id_list <~ ":") ~ expression ^^ { 
+        ("lambda"~> id_list <~ ":") ~ expression ^^ {
               case formal_args ~ body => LambdaDef(IdList(formal_args), body)
         }
       | or_expr
@@ -84,7 +83,7 @@ class Parser extends JavaTokenParsers {
 
 
   def not_expr: Parser[Node] = (
-        
+
         "not"~>not_expr ^^ (Unary("not", _)) // equivalent to "not"~>not_expr ^^ { case not_expr => Unary("not", not_expr) }
       | binary(minPrec) ~ opt(("if"~>binary(minPrec)<~"else") ~ expression) ^^ {
           case left ~ None => left
@@ -109,7 +108,7 @@ class Parser extends JavaTokenParsers {
 
   def binary(level: Int): Parser[Node] = (
       if (level>maxPrec) unary
-      else if(level==maxPrec) rep1sep(binary(level+1), "**") ^^ {_.reduceRight(BinExpr("**", _, _))} /////////////////dodane//
+      else if(level == maxPrec) rep1sep(binary(level + 1), "**") ^^ {_.reduceRight(BinExpr("**", _, _))}
       else chainl1( binary(level+1), binaryOp(level) ) // equivalent to binary(level+1) * binaryOp(level)
   )
 
@@ -119,29 +118,29 @@ class Parser extends JavaTokenParsers {
         op => op ^^^ { ((a:Node, b:Node) => BinExpr(op,a,b)) }
     }.reduce( (head, tail) => head | tail)
   }
-  
+
 
   def unary: Parser[Node] = (
         ("+"|"-")~unary ^^ { case "+" ~ expression => expression
-                             case "-" ~ expression => Unary("-", expression) 
+                             case "-" ~ expression => Unary("-", expression)
                            }
       | primary
   )
 
 
-  def primary: Parser[Node] = ( ///////////////////////////////zmienione//
-        lvalue
-      | const
-      | "("~>expression<~")"
-      | "["~>expr_list_comma<~"]" ^^ { 
-          case NodeList(x) => ElemList(x)
-          case l => { println("Warn: expr_list_comma didn't return NodeList"); l }
-         }
-      | "("~>expr_list_comma<~")" ^^ { ///////////////////////////////dodane//
-          case NodeList(x) => Tuple(x)
-          case l => println("Warn: expr_list_comma [tuple] didn't return NodeList"); l
-        }
-      | "{"~>key_datum_list<~"}"
+  def primary: Parser[Node] = (
+      lvalue
+    | const
+    | "("~>expression<~")"
+    | "["~>expr_list_comma<~"]" ^^ {
+        case NodeList(x) => ElemList(x)
+        case l => { println("Warn: expr_list_comma didn't return NodeList"); l }
+       }
+    | "("~>expr_list_comma<~")" ^^ { ///////////////////////////////dodane//
+        case NodeList(x) => Tuple(x)
+        case l => println("Warn: expr_list_comma [tuple] didn't return NodeList"); l
+      }
+    | "{"~>key_datum_list<~"}"
   )
 
 
@@ -149,7 +148,7 @@ class Parser extends JavaTokenParsers {
       case id ~ list => foldTrailer(Variable(id), list)
   }
 
-  def trailer: Parser[List[Tuple2[String,Node]]] = rep( 
+  def trailer: Parser[List[Tuple2[String,Node]]] = rep(
                                                      "(" ~> expr_list <~")" ^^ { case expr_list => Tuple2("(", expr_list) }
                                                    | "[" ~> expression <~"]" ^^ { case expression => Tuple2("[", expression) }
                                                    | "." ~> id ^^ { case id => Tuple2(".", Variable(id)) }
@@ -230,21 +229,21 @@ class Parser extends JavaTokenParsers {
       case target ~ expression => Assignment(target, expression)
   }
 
-  def if_else_stmt: Parser[Node] = ( ///////////////////////////////zmienione//
-      "if" ~> expression ~ (":" ~> suite) ~ ("elif" ~> expression ~ (":" ~> suite)).* ~ ("else"~":" ~> suite).? ^^ {
-        case expression ~ suite1 ~ elifs ~ Some(suite2) =>
-          val alternative = elifs.foldRight(suite2) {
-            case (_expression ~ _suite1, _suite2) => IfElseInstr(_expression, _suite1, _suite2)
-          }
-          IfElseInstr(expression, suite1, alternative)
-        case expression ~ suite ~ elifs ~ None if elifs.size == 0 =>
-          IfInstr(expression, suite)
-        case expression ~ suite ~ elifs ~ None =>
-          val alternative = elifs.init.foldRight[Node](IfInstr(elifs.last._1, elifs.last._2)) {
-            case (_expression ~ _suite1, _suite2) => IfElseInstr(_expression, _suite1, _suite2)
-          }
-          IfElseInstr(expression, suite, alternative)
-      }
+  def if_else_stmt: Parser[Node] = (
+        "if" ~> expression ~ (":" ~> suite) ~ ("elif" ~> expression ~ (":" ~> suite)).* ~ ("else"~":" ~> suite).? ^^ {
+          case expression ~ suite1 ~ elifs ~ Some(suite2) =>
+            val alternative = elifs.foldRight(suite2) {
+              case (_expression ~ _suite1, _suite2) => IfElseInstr(_expression, _suite1, _suite2)
+            }
+            IfElseInstr(expression, suite1, alternative)
+          case expression ~ suite ~ elifs ~ None if elifs.size == 0 =>
+            IfInstr(expression, suite)
+          case expression ~ suite ~ elifs ~ None =>
+            val alternative = elifs.init.foldRight[Node](IfInstr(elifs.last._1, elifs.last._2)) {
+              case (_expression ~ _suite1, _suite2) => IfElseInstr(_expression, _suite1, _suite2)
+            }
+            IfElseInstr(expression, suite, alternative)
+        }
   )
 
   def while_stmt: Parser[WhileInstr] = "while" ~> expression ~ (":"~>suite) ^^ {
@@ -254,4 +253,3 @@ class Parser extends JavaTokenParsers {
   def input_instr: Parser[InputInstr] = "input"~"("~")" ^^^ InputInstr()
 
 }
-

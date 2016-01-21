@@ -5,10 +5,10 @@ object SimplifyNodeList {
   def apply(nodeList: NodeList): Node = {
     (nodeList.list) match {
       case (list) => list match {
-        case Nil => EmptyInstr()
+        case Nil => BlankInstruction()
         case (snowflake::Nil) => snowflake match {
-          case EmptyInstr() => EmptyInstr()
-          case NodeList(l) => Simplifier(NodeList(l map Simplifier.simplify)) // zostawiamy tylko jeden layer node listow
+          case BlankInstruction() => BlankInstruction()
+          case NodeList(l) => Simplifier(NodeList(l map Simplifier.simplify)) 
           case n =>
             val simplifiedElement = Simplifier(n)
             if (simplifiedElement != n) Simplifier(NodeList(List(Simplifier(n)))) else NodeList(List(simplifiedElement))

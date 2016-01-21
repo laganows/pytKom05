@@ -14,14 +14,14 @@ object Simplifier {
       (_map, kd) => _map + (kd.key -> kd)
     ).toList.map(p => p._2))
 
-    //case n: NodeList => SimplifyNodeList(n)
+    //tuple
     case n: Tuple => Tuple(n.list map simplify)
 
-    // usuwanie petli z falszywym warunkiem:
+    //petle z falszywym warunkiem
     case WhileInstr(cond, body) =>
       val sCond = simplify(cond)
       sCond match {
-        case FalseConst() => EmptyInstr()
+        case FalseConst() => BlankInstruction()
         case (_) => WhileInstr(sCond, simplify(body))
       }
 
@@ -32,11 +32,11 @@ object Simplifier {
     case n: IfElseExpr  => SimplifyIfElseExpr(n)
 
     case Assignment(Variable(x), expr) => expr match {
-      case Variable(y) if x == y => EmptyInstr()
+      case Variable(y) if x == y => BlankInstruction()
       case (_) => Assignment(Variable(x), simplify(expr))
     }
 
-    // operacje arytmetyczne
+    // arytmetyczne operacje
     case n: BinExpr => SimplifyBinExpr(n)
 
     // wyrazenia unarne
